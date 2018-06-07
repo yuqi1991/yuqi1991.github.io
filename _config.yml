@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Yukei's Space
+title: Yukei Lee
 subtitle:
 description:
 keywords:
@@ -74,7 +74,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: next
+theme: new-vno
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
