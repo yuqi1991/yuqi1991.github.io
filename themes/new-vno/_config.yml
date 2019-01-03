@@ -17,7 +17,7 @@ social:
 page_comment: true
 logo: /images/avatar.png
 background:
-  cover: /images/background-cover.jpg
+  cover: https://res.cloudinary.com/dgzvrh0pe/image/upload/c_limit,h_2448,q_auto:eco,w_3840/v1546524309/DSC_2803.jpg
   color: cover-disabled
 
 archive_date_format: MMM DD
