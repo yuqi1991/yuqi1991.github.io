@@ -2,7 +2,7 @@ menu:
   Archives: /archives
   #黄金屋: /favourite
   #Tags: /tags/time.html
-  Album: /albums
+  #Album: /albums
   #About me: /aboutme
 #rss: /atom.xml
 description: 
@@ -25,14 +25,23 @@ fancybox: true
 
 #duoshuo_shortname: 
 
-livere_uid: MTAyMC8zNzA0MS8xMzU3Nw==
+#livere_uid: MTAyMC8zNzA0MS8xMzU3Nw==
+
+# Disqus 
+disqus:
+  enable: true
+  shortname: yukeilee_top    #your name
+  count: true
+
+# Hypercomments
+#hypercomments_id:
 
 #google_analytics: UA-78918255-1
 #baidu_tongji: 9cdad07c755fa23f6aced510c6760e87
 favicon: /images/avatar-small.png
 
-#mathjax
-mathjax: true
+mathjax:
+   enable: true
 
 # 'Read more' button
 excerpt_link: 继续阅读
