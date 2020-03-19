@@ -28,10 +28,10 @@ tags:
 
 ![p3](pointrend_3.png)
 
-&ensp;而在我自己的任务中，简单的二类分割任务在加入此模块后mIoU从95.4%提高至98.8%，更重要的是，over sampling 方法使场景分类稳定性大大提高。而在网络结构上,detectron2的代码中只使用一个1x1 conv作为模块的mlp，个人觉得觉得可以再后接了一层Elu(对于有速度要求的任务，可尝试用elu替换bn+Relu，效果往往不差)。其次个人发现把backbone结果先上采样层到fine-grained层同尺度作为coarse output再与fine-grained concat起来才开始迭代，比起原文中从最高层直接来concat收敛速度会快很多，猜测是由于concat两边的channel数相近能使mlp比较“均匀”地学习到特征。
+&ensp;在我自己的任务中，简单的二类分割任务在加入此模块后mIoU从95.4%提高至98.8%，更重要的是，over sampling 取点较大地提高了使场景边缘分类的稳定性。在网络结构上,detectron2的代码中只使用一个1x1 conv作为模块分类的mlp，我觉得可以再后接了一层Elu(对于有速度要求的任务，可尝试用elu替换bn+Relu，效果往往不差)。其次个人发现把backbone结果先用传统分割decoder上采样至与fine-grained层同尺度作为coarse output再与fine-grained concat起才开始让point render介入，比起原文中从encodeer最高层直接来concat收敛速度会快很多，猜测是由于concat两边的channel数相近能使mlp比较“均匀”地学习到特征。
 
 #### Conclusion
-&ensp;个人觉得这个方法以后可以成为segmentation任务的一个common trick，而从rcnn到deeplabv3，语义分割已经达到了80分可用水平，但要真正大规模在在工业应用还有很多工作，下一步会尝试下加入self attention看看两者能否互相产生些新的效果。
+&ensp;从实践的角度看,我觉得这个方法以后可以成为segmentation任务的一个common trick，而从rcnn到deeplabv3，语义分割已经达到了80分可用水平，但要真正大规模在在工业应用还有很多工作，下一步会尝试下加入self attention看看两者能否互相产生些新的效果。
 
 
 
