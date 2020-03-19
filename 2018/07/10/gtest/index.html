@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="e">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>Gtest 测试框架使用方法整理 | Yukei Lee</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Gtest 测试框架使用方法整理 | Yukei Lee">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Gtest 测试框架使用方法整理 | Yukei Lee">
+    <meta property="og:description" content="">
+
+    
+    <meta name="author" content="Yukei Lee">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/avatar-small.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yukeilee.top/2018/07/10/gtest/"/><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+                 
+</head>
+
+<body class="home-template no-js">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(https://res.cloudinary.com/dgzvrh0pe/image/upload/c_limit,h_2448,q_auto:eco,w_3840/v1546524309/DSC_2803.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Yukei Lee 的主页"><img src="/images/avatar.png" width="80" alt="Yukei Lee logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Yukei Lee">Yukei Lee</a></h1>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description"></p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="/archives">Archives</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/yuqi1991" title="GitHub" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  
+
+
+  <li class="navigation__item">
+    <a href="mailto:yuqi.li.91@gmail.com" title="Mail" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div> 
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-07-10T13:58:00.000Z" class="post-list__meta--date date">2018-07-10</time> &#8226; <span class="post-meta__tags tags">于 
+  <a class="tag-link" href="/tags/C/">C++</a>, <a class="tag-link" href="/tags/gtest/">gtest</a>, <a class="tag-link" href="/tags/unit-test/">unit test</a>
+ </span>
+      <span class="page-pv">
+       Read <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">Gtest 测试框架使用方法整理</h1>
+  </header>
+
+  <section class="post">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/css/lightgallery.min.css"><div class=".article-gallery" <p>  最近面试的几家公司都有关于嵌入式unit test框架的问题，想到自己从没有正儿八经地学习过这类型的测试框架，久闻google的gtest大名，于是拉下来在clion上学着试用了一下。<br>   <a id="more"></a><p></p>
+<p>gtest源代码可以在<a href>https://github.com/google/googletest</a>直接pull下来，里面已经除了gtest以外还有一个mock框架-gmock，用于生成虚拟类进行打桩测试。</p>
+<h3 id="关于在CLion的使用配置"><a href="#关于在CLion的使用配置" class="headerlink" title="关于在CLion的使用配置"></a>关于在CLion的使用配置</h3><p>gtest根目录下已经有配置好了的CMakeList.txt文件，在clion上使用只需要把整个gtest文件夹复制到项目目录中，再通过配置项目本身的CMakeList文件即可启用gtest。</p>
+<p>CMakeList.txt配置例子如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required(VERSION <span class="number">3.10</span>)</span><br><span class="line">project(c_lion_test)</span><br><span class="line"></span><br><span class="line">add_subdirectory(./googletest)</span><br><span class="line">include_directories(./googletest/googletest/include)</span><br><span class="line">include_directories(./googletest/googlemock/include)</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line"><span class="built_in">set</span>(LIBRARIES gtest gtest_main pthread)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">add_executable(c_lion_test main.cpp)</span><br><span class="line">target_link_libraries(c_lion_test $&#123;LIBRARIES&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="框架使用"><a href="#框架使用" class="headerlink" title="框架使用"></a>框架使用</h3><p>待续…</p>
+</div><script src="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js"></script><script>if (typeof lightGallery !== 'undefined') {
+        var options = {
+            selector: '.gallery-item'
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options);
+        }</script>
+  </section>
+
+</article>
+
+<section class="read-more">
+           
+    
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Newer Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/08/03/个人面试总结-嵌入式软件/" title="个人面试总结-嵌入式软件">个人面试总结-嵌入式软件</a></h2>
+                <p class="excerpt">
+                
+                
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-08-03T14:20:24.000Z" class="post-list__meta--date date">2018-08-03</time> &#8226; <span class="post-list__meta--tags tags">于 
+  <a class="tag-link" href="/tags/技术/">技术</a>, <a class="tag-link" href="/tags/面试/">面试</a>
+</span><a class="btn-border-small" href="/2018/08/03/个人面试总结-嵌入式软件/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Older Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/2018/06/12/C-lambda-使用心得/" title="C++11 Lambda 小结">C++11 Lambda 小结</a></h2>
+                <p class="excerpt">
+                
+                
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2018-06-11T19:43:37.000Z" class="post-list__meta--date date">2018-06-12</time> &#8226; <span class="post-list__meta--tags tags">于 
+  <a class="tag-link" href="/tags/C/">C++</a>, <a class="tag-link" href="/tags/code/">code</a>
+</span><a class="btn-border-small" href="/2018/06/12/C-lambda-使用心得/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+  <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://yukeilee-top.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        &copy; 2020 Yukei Lee - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+       
+    </span>
+    <span class="footer__copyright">
+             - 基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+         </span>
+       
+    
+    
+</footer>
+
+
+        </div>
+    </div>
+
+     
+    
+
+
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+    
+</body>
+</html>

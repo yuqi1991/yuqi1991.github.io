@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="e">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>PointRend 实践心得 | Yukei Lee</title>
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="PointRend 实践心得 | Yukei Lee">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="PointRend 实践心得 | Yukei Lee">
+    <meta property="og:description" content="">
+
+    
+    <meta name="author" content="Yukei Lee">
+    
+    <link rel="stylesheet" href="/css/vno.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+
+    
+    <link rel="icon" href="/images/avatar-small.png">
+    
+
+    <meta name="generator" content="hexo"/>
+    
+
+    <link rel="canonical" href="http://yukeilee.top/2020/03/14/PointRend实践心得和个人技巧/"/><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+                 
+</head>
+
+<body class="home-template no-js">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(https://res.cloudinary.com/dgzvrh0pe/image/upload/c_limit,h_2448,q_auto:eco,w_3840/v1546524309/DSC_2803.jpg)">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/" title="前往 Yukei Lee 的主页"><img src="/images/avatar.png" width="80" alt="Yukei Lee logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for Yukei Lee">Yukei Lee</a></h1>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description"></p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+
+        <div class="navigation-wrapper">
+          <div>
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="Visit the blog" class="blog-button">Blog</a></li>
+            
+              <li class="navigation__item"><a href="/archives">Archives</a></li>
+            
+            </ul>
+          </nav>
+          </div>
+          <div>
+          <nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  <!-- Weibo-->
+  
+
+  <!-- Github -->
+  
+  <li class="navigation__item">
+    <a href="https://github.com/yuqi1991" title="GitHub" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+
+
+<!-- Stack Overflow -->
+        
+
+  <!-- Google Plus -->
+  
+
+<!-- Facebook -->
+
+  
+<!-- Twitter -->
+
+  
+
+
+  <li class="navigation__item">
+    <a href="mailto:yuqi.li.91@gmail.com" title="Mail" target="_blank">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+
+
+  </ul>
+</nav>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay cover-disabled"></div>
+  </div> 
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2020-03-14T14:30:30.000Z" class="post-list__meta--date date">2020-03-14</time> &#8226; <span class="post-meta__tags tags">于 
+  <a class="tag-link" href="/tags/技术/">技术</a>, <a class="tag-link" href="/tags/语义分割/">语义分割</a>
+ </span>
+      <span class="page-pv">
+       Read <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">PointRend 实践心得</h1>
+  </header>
+
+  <section class="post">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/css/lightgallery.min.css"><div class=".article-gallery" <p>  本篇主要记录关于最近比较火的一篇kaiming大神挂名的论文：PointRend: Image Segmentation as Rendering在实际使用过程中的一些心得技巧。<a href="https://arxiv.org/pdf/1912.08193.pdf" target="_blank" rel="noopener">论文链接-arxiv</a><p></p>
+<a id="more"></a>
+<h4 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h4><p>&ensp;2个月前接到新的项目需要对某场景进行语义分割，目前大多数semantic segmentation和instance segmentation的模型在实际生产环境中的表现并未达到可用水平，主要因素来自于performance，inference speed，labeling等，而且各大benchmark榜上以mIoU为主要的评价维度很多时候并不能准确地评价算法模型在使用场景中的可用性程度。恰好碰上这篇论文，于是花了数天时间把这个模块加到原本的模型后面跑了下训练，发现效果出奇的好。该算法代码已经集成在detectron2的开源库里面。</p>
+<h4 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h4><p>&ensp;首先介绍一下论文内容。读完文章后不难会发现，该算法实质上与文章中描述的Rendering Algorithm并没有太大的关系，个人认为甚至这是作者的障眼法，反而原文开头部分对算法的描述似乎更精准：</p>
+<blockquote>
+<p>a module that performs point-based segmentation predictions at adaptively selected locations based on an iterative subdivision algorithm.</p>
+</blockquote>
+<p>&ensp;对于实际应用场景而言，如文章中所述，目前在精度上的瓶颈来自于边缘位置分类的稳定性(参考下图)，这种瓶颈并不是因为网络本身的特征提取能力不足，而是在于网络连续的down/up sample带来的信息丢失，所以单纯的增加参数量已经不是可取之道。<br><a href="pointrend_0.png" title="p0" class="gallery-item"><img src="/.top//pointrend_0.png" alt="p0"></a><br>&ensp;我个人理解该文章是借鉴了objects detection的思路，把segmentation也做成2 stage来提高精度，所以也能应用在instance segmentation任务。其本质可以说是在特征层面针对样本边缘难分点的OHEM，它的精妙之处在于区别开了training和inference的过程，在保证了inference的速度同时也提高了分类精度。</p>
+<p><a href="pointrend_1.png" title="p1" class="gallery-item"><img src="/.top//pointrend_1.png" alt="p1"></a> <a href="pointrend_2.png" title="p2" class="gallery-item"><img src="/.top//pointrend_2.png" alt="p2"></a><br>&ensp;算法过程如上两图，training过程中，该模块在网络最后的输出层上面随机取点(称为coarse prediction layer),再抽取网络backbone中仍然还带有比较丰富feature信息的一层(原文中叫fine-grained features)同样位置的点。之后把两种采样点的特征concat起来后，经过一个mlp处理(detectron2中只使用一个1x1的conv层)然后把结果替代原来的点作为该尺度下的输出，最后通过在多次上采样并重复这个过程到输出尺度。<br>&ensp;此外，loss function需要加入了一项points loss来对前面的mlp优化。而在inference过程中,把training的随机取点过程替代为在整个feature map上取topk个最难分的点(即在输出feathre map中取最大的两个channel的值最接近的topk点)，topk点的数量可以根据性能要求来调整，原文建议每一层抽取了14*14个点。文章还探讨了不同采样点方案对结果的影响，具体参考原文。</p>
+<h4 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h4><p>&ensp;原文在COCO数据集上，与mask rcnn的结果进行对比，虽然结果的mIoU提升了只有1-2个点，但是在边缘位置是肉眼可见的提升。</p>
+<p><a href="pointrend_3.png" title="p3" class="gallery-item"><img src="/.top//pointrend_3.png" alt="p3"></a></p>
+<p>&ensp;在我自己的任务中，简单的二类分割任务在加入此模块后mIoU从95.4%提高至98.8%，更重要的是，over sampling 取点较大地提高了使场景边缘分类的稳定性。在网络结构上,detectron2的代码中只使用一个1x1 conv作为模块分类的mlp，我觉得可以再后接了一层Elu(对于有速度要求的任务，可尝试用elu替换bn+Relu，效果往往不差)。其次个人发现把backbone结果先用传统分割decoder上采样至与fine-grained层同尺度作为coarse output再与fine-grained concat起才开始让point render介入，比起原文中从encodeer最高层直接来concat收敛速度会快很多，猜测是由于concat两边的channel数相近能使mlp比较“均匀”地学习到特征。</p>
+<h4 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h4><p>&ensp;从实践的角度看,我觉得这个方法以后可以成为segmentation任务的一个common trick，而从rcnn到deeplabv3，语义分割已经达到了80分可用水平，但要真正大规模在在工业应用还有很多工作，下一步会尝试下加入self attention看看两者能否互相产生些新的效果。</p>
+</div><script src="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js"></script><script>if (typeof lightGallery !== 'undefined') {
+        var options = {
+            selector: '.gallery-item'
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options);
+        }</script>
+  </section>
+
+</article>
+
+<section class="read-more">
+           
+    
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">Older Post</span>
+                <h2 class="post-list__post-title post-title"><a href="/2019/01/03/读书笔记-C-11移动语义和完美转发的理解/" title="[读书笔记]C++11移动语义和完美转发的理解">[读书笔记]C++11移动语义和完美转发的理解</a></h2>
+                <p class="excerpt">
+                
+                
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2019-01-03T14:54:19.000Z" class="post-list__meta--date date">2019-01-03</time> &#8226; <span class="post-list__meta--tags tags">于 
+  <a class="tag-link" href="/tags/C-11/">C++11</a>, <a class="tag-link" href="/tags/技术/">技术</a>
+</span><a class="btn-border-small" href="/2019/01/03/读书笔记-C-11移动语义和完美转发的理解/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
+  
+</section>
+
+  <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://yukeilee-top.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+            <footer class="footer">
+    <span class="footer__copyright">
+        &copy; 2020 Yukei Lee - 本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+       
+    </span>
+    <span class="footer__copyright">
+             - 基于 <a href="http://hexo.io">Hexo</a> 搭建，使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题，由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
+         </span>
+       
+    
+    
+</footer>
+
+
+        </div>
+    </div>
+
+     
+    
+
+
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+    
+</body>
+</html>
